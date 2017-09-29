@@ -103,8 +103,8 @@ public class LoginController {
             	emv.addObject("errorMsg", "비밀번호를 입력해 주십시오!"); 
 				return emv;
             } else {
-            	log.error("inPwd:"+inPwd);
-            	log.error("inPwd:"+CommonUtils.shaEncoder(inPwd));
+//            	log.error("inPwd:"+inPwd);
+//            	log.error("inPwd:"+CommonUtils.shaEncoder(inPwd));
             	if(!CommonUtils.shaMatches(dbPwd, inPwd)) {
                 	emv.addObject("email", ObjectUtils.null2void(commandMap.get("email")));
                 	emv.addObject("errorMsg", "이메일과 비밀번호가 일치하지 않습니다!"); 
