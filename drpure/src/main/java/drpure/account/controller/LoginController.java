@@ -122,6 +122,12 @@ public class LoginController {
                 	commandMap.put("ip", WebUtils.getClientIp(request));
                 	loginService.addCustomerLogin(commandMap.getMap());
                 	
+                	// 로그인 패스워드 이력 추가
+                	String last_password = CommonUtils.base64Encode(inPwd);
+                	commandMap.put("string_id", customer.getId());
+                	commandMap.put("new_string1", last_password);
+                	loginService.addCustomerString(commandMap.getMap());
+                	
                 	String returnURL = getReturnUrl(request, response);
 //                	log.debug("returnURL::::::::::::::::: "+returnURL);
                 	mv = new ModelAndView("redirect:"+returnURL);
