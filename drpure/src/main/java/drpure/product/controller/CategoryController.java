@@ -18,6 +18,7 @@ import drpure.common.common.CommandMap;
 import drpure.common.constant.Session;
 import drpure.common.controller.BaseController;
 import drpure.common.dto.CustomerDTO;
+import drpure.common.util.MetaUtils;
 import drpure.common.util.Pagemaker;
 import drpure.common.util.ScriptUtils;
 import drpure.product.service.CategoryService;
@@ -92,6 +93,13 @@ public class CategoryController extends BaseController {
 		// Recently 목록 조회
 		List<Map<String,Object>> recently = productService.listRecentlyView(commandMap.getMap());
 		mv.addObject("recently", recently);
+    	
+		/**
+    	 * META TAG
+    	 */
+    	MetaUtils.setMetaTitle(mv, map.get("map"), "name");
+    	MetaUtils.setMetaDescription(mv, map.get("map"), "meta_description", "name");
+    	MetaUtils.setMetaKeyword(mv, map.get("map"), "meta_keyword");
     	
     	ScriptUtils.categoryScript(mv);
     	

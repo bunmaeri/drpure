@@ -1,6 +1,5 @@
 package drpure.information.controller;
 
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,8 +17,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import drpure.common.common.CommandMap;
 import drpure.common.constant.Constants;
-import drpure.common.constant.Session;
 import drpure.common.util.CookieUtils;
+import drpure.common.util.MetaUtils;
 import drpure.common.util.StoreUtil;
 import drpure.information.service.InformationService;
 
@@ -54,6 +53,13 @@ public class InformationController {
     	List<Map<String,Object>> recentViewedList = getCookieInformation(request, "clinic");
     	mv.addObject("recentViewedList", recentViewedList);
     	
+    	/**
+    	 * META TAG
+    	 */
+    	MetaUtils.setMetaTitle(mv, map.get("map"), "name", "title");
+    	MetaUtils.setMetaDescription(mv, map.get("map"), "meta_description", "title");
+    	MetaUtils.setMetaKeyword(mv, map.get("map"), "meta_keyword");
+    	
     	return mv;
     }
 
@@ -84,6 +90,13 @@ public class InformationController {
     	// 최근 본 정보에 저장
     	setCookieInformation(request, response, "clinic", contents_id);
     	
+    	/**
+    	 * META TAG
+    	 */
+    	MetaUtils.setMetaTitle(mv, map.get("map"), "name", "title");
+    	MetaUtils.setMetaDescription(mv, map.get("map"), "meta_description", "title");
+    	MetaUtils.setMetaKeyword(mv, map.get("map"), "meta_keyword");
+    	
     	return mv;
     }
 	
@@ -110,6 +123,13 @@ public class InformationController {
     	// 쿠키에서 최근에 본 정보를 가져온다.
     	List<Map<String,Object>> recentViewedList = getCookieInformation(request, "disease");
     	mv.addObject("recentViewedList", recentViewedList);
+    	
+    	/**
+    	 * META TAG
+    	 */
+    	MetaUtils.setMetaTitle(mv, map.get("map"), "name", "title");
+    	MetaUtils.setMetaDescription(mv, map.get("map"), "meta_description", "title");
+    	MetaUtils.setMetaKeyword(mv, map.get("map"), "meta_keyword");
     	
     	return mv;
     }
@@ -152,6 +172,13 @@ public class InformationController {
     	// 최근 본 정보에 저장
     	setCookieInformation(request, response, "disease", contents_id);
     	
+    	/**
+    	 * META TAG
+    	 */
+    	MetaUtils.setMetaTitle(mv, map.get("map"), "name", "title");
+    	MetaUtils.setMetaDescription(mv, map.get("map"), "meta_description", "title");
+    	MetaUtils.setMetaKeyword(mv, map.get("map"), "meta_keyword");
+    	
     	return mv;
     }
 	
@@ -178,6 +205,13 @@ public class InformationController {
     	// 쿠키에서 최근에 본 정보를 가져온다.
     	List<Map<String,Object>> recentViewedList = getCookieInformation(request, "health");
     	mv.addObject("recentViewedList", recentViewedList);
+    	
+    	/**
+    	 * META TAG
+    	 */
+    	MetaUtils.setMetaTitle(mv, map.get("map"), "name", "title");
+    	MetaUtils.setMetaDescription(mv, map.get("map"), "meta_description", "title");
+    	MetaUtils.setMetaKeyword(mv, map.get("map"), "meta_keyword");
     	
     	return mv;
     }
@@ -210,6 +244,13 @@ public class InformationController {
     	
     	// 최근 본 정보에 저장
     	setCookieInformation(request, response, "health", contents_id);
+    	
+    	/**
+    	 * META TAG
+    	 */
+    	MetaUtils.setMetaTitle(mv, map.get("map"), "name", "title");
+    	MetaUtils.setMetaDescription(mv, map.get("map"), "meta_description", "title");
+    	MetaUtils.setMetaKeyword(mv, map.get("map"), "meta_keyword");
     	
     	return mv;
     }
@@ -303,6 +344,13 @@ public class InformationController {
 //    	List<Map<String,Object>> list = informationService.listInformation(commandMap.getMap());
 //    	mv.addObject("list", list);
     	
+    	/**
+    	 * META TAG
+    	 */
+    	MetaUtils.setMetaTitle(mv, map.get("map"), "name", "title");
+    	MetaUtils.setMetaDescription(mv, map.get("map"), "meta_description", "title");
+    	MetaUtils.setMetaKeyword(mv, map.get("map"), "meta_keyword");
+    	
     	return mv;
     }
 	
@@ -320,6 +368,13 @@ public class InformationController {
     	commandMap.put("language_id", language_id);
     	Map<String,Object> map = informationService.information(commandMap.getMap());
     	mv.addObject("map", map.get("map"));
+    	
+    	/**
+    	 * META TAG
+    	 */
+    	MetaUtils.setMetaTitle(mv, map.get("map"), "name", "title");
+    	MetaUtils.setMetaDescription(mv, map.get("map"), "meta_description", "title");
+    	MetaUtils.setMetaKeyword(mv, map.get("map"), "meta_keyword");
     	
     	return mv;
     }
@@ -339,6 +394,13 @@ public class InformationController {
     	Map<String,Object> map = informationService.information(commandMap.getMap());
     	mv.addObject("map", map.get("map"));
     	
+    	/**
+    	 * META TAG
+    	 */
+    	MetaUtils.setMetaTitle(mv, map.get("map"), "name", "title");
+    	MetaUtils.setMetaDescription(mv, map.get("map"), "meta_description", "title");
+    	MetaUtils.setMetaKeyword(mv, map.get("map"), "meta_keyword");
+    	
     	return mv;
     }
 	
@@ -356,6 +418,13 @@ public class InformationController {
     	commandMap.put("language_id", language_id);
     	Map<String,Object> map = informationService.information(commandMap.getMap());
     	mv.addObject("map", map.get("map"));
+    	
+    	/**
+    	 * META TAG
+    	 */
+    	MetaUtils.setMetaTitle(mv, map.get("map"), "name", "title");
+    	MetaUtils.setMetaDescription(mv, map.get("map"), "meta_description", "title");
+    	MetaUtils.setMetaKeyword(mv, map.get("map"), "meta_keyword");
     	
     	return mv;
     }
@@ -375,6 +444,13 @@ public class InformationController {
     	Map<String,Object> map = informationService.information(commandMap.getMap());
     	mv.addObject("map", map.get("map"));
     	
+    	/**
+    	 * META TAG
+    	 */
+    	MetaUtils.setMetaTitle(mv, map.get("map"), "name", "title");
+    	MetaUtils.setMetaDescription(mv, map.get("map"), "meta_description", "title");
+    	MetaUtils.setMetaKeyword(mv, map.get("map"), "meta_keyword");
+    	
     	return mv;
     }
 	
@@ -392,6 +468,13 @@ public class InformationController {
     	commandMap.put("language_id", language_id);
     	Map<String,Object> map = informationService.information(commandMap.getMap());
     	mv.addObject("map", map.get("map"));
+    	
+    	/**
+    	 * META TAG
+    	 */
+    	MetaUtils.setMetaTitle(mv, map.get("map"), "name", "title");
+    	MetaUtils.setMetaDescription(mv, map.get("map"), "meta_description", "title");
+    	MetaUtils.setMetaKeyword(mv, map.get("map"), "meta_keyword");
     	
     	return mv;
     }
@@ -411,6 +494,13 @@ public class InformationController {
     	Map<String,Object> map = informationService.information(commandMap.getMap());
     	mv.addObject("map", map.get("map"));
     	
+    	/**
+    	 * META TAG
+    	 */
+    	MetaUtils.setMetaTitle(mv, map.get("map"), "name", "title");
+    	MetaUtils.setMetaDescription(mv, map.get("map"), "meta_description", "title");
+    	MetaUtils.setMetaKeyword(mv, map.get("map"), "meta_keyword");
+    	
     	return mv;
     }
 	
@@ -428,6 +518,13 @@ public class InformationController {
     	commandMap.put("language_id", language_id);
     	Map<String,Object> map = informationService.information(commandMap.getMap());
     	mv.addObject("map", map.get("map"));
+    	
+    	/**
+    	 * META TAG
+    	 */
+    	MetaUtils.setMetaTitle(mv, map.get("map"), "name", "title");
+    	MetaUtils.setMetaDescription(mv, map.get("map"), "meta_description", "title");
+    	MetaUtils.setMetaKeyword(mv, map.get("map"), "meta_keyword");
     	
     	return mv;
     }
@@ -447,6 +544,13 @@ public class InformationController {
     	Map<String,Object> map = informationService.information(commandMap.getMap());
     	mv.addObject("map", map.get("map"));
     	
+    	/**
+    	 * META TAG
+    	 */
+    	MetaUtils.setMetaTitle(mv, map.get("map"), "name", "title");
+    	MetaUtils.setMetaDescription(mv, map.get("map"), "meta_description", "title");
+    	MetaUtils.setMetaKeyword(mv, map.get("map"), "meta_keyword");
+    	
     	return mv;
     }
 	
@@ -464,6 +568,13 @@ public class InformationController {
     	commandMap.put("language_id", language_id);
     	Map<String,Object> map = informationService.information(commandMap.getMap());
     	mv.addObject("map", map.get("map"));
+    	
+    	/**
+    	 * META TAG
+    	 */
+    	MetaUtils.setMetaTitle(mv, map.get("map"), "name", "title");
+    	MetaUtils.setMetaDescription(mv, map.get("map"), "meta_description", "title");
+    	MetaUtils.setMetaKeyword(mv, map.get("map"), "meta_keyword");
     	
     	return mv;
     }
@@ -483,6 +594,13 @@ public class InformationController {
     	Map<String,Object> map = informationService.information(commandMap.getMap());
     	mv.addObject("map", map.get("map"));
     	
+    	/**
+    	 * META TAG
+    	 */
+    	MetaUtils.setMetaTitle(mv, map.get("map"), "name", "title");
+    	MetaUtils.setMetaDescription(mv, map.get("map"), "meta_description", "title");
+    	MetaUtils.setMetaKeyword(mv, map.get("map"), "meta_keyword");
+    	
     	return mv;
     }
 	
@@ -501,6 +619,13 @@ public class InformationController {
     	Map<String,Object> map = informationService.information(commandMap.getMap());
     	mv.addObject("map", map.get("map"));
     	
+    	/**
+    	 * META TAG
+    	 */
+    	MetaUtils.setMetaTitle(mv, map.get("map"), "name", "title");
+    	MetaUtils.setMetaDescription(mv, map.get("map"), "meta_description", "title");
+    	MetaUtils.setMetaKeyword(mv, map.get("map"), "meta_keyword");
+    	
     	return mv;
     }
 	
@@ -518,6 +643,13 @@ public class InformationController {
     	commandMap.put("language_id", language_id);
     	Map<String,Object> map = informationService.information(commandMap.getMap());
     	mv.addObject("map", map.get("map"));
+    	
+    	/**
+    	 * META TAG
+    	 */
+    	MetaUtils.setMetaTitle(mv, map.get("map"), "name", "title");
+    	MetaUtils.setMetaDescription(mv, map.get("map"), "meta_description", "title");
+    	MetaUtils.setMetaKeyword(mv, map.get("map"), "meta_keyword");
     	
     	return mv;
     }
@@ -538,6 +670,13 @@ public class InformationController {
     	Map<String,Object> map = informationService.information(commandMap.getMap());
     	mv.addObject("map", map.get("map"));
     	
+    	/**
+    	 * META TAG
+    	 */
+    	MetaUtils.setMetaTitle(mv, map.get("map"), "name", "title");
+    	MetaUtils.setMetaDescription(mv, map.get("map"), "meta_description", "title");
+    	MetaUtils.setMetaKeyword(mv, map.get("map"), "meta_keyword");
+    	
     	return mv;
     }
 	
@@ -555,6 +694,13 @@ public class InformationController {
     	commandMap.put("language_id", language_id);
     	Map<String,Object> map = informationService.information(commandMap.getMap());
     	mv.addObject("map", map.get("map"));
+    	
+    	/**
+    	 * META TAG
+    	 */
+    	MetaUtils.setMetaTitle(mv, map.get("map"), "name", "title");
+    	MetaUtils.setMetaDescription(mv, map.get("map"), "meta_description", "title");
+    	MetaUtils.setMetaKeyword(mv, map.get("map"), "meta_keyword");
     	
     	return mv;
     }
@@ -574,6 +720,13 @@ public class InformationController {
     	Map<String,Object> map = informationService.information(commandMap.getMap());
     	mv.addObject("map", map.get("map"));
     	
+    	/**
+    	 * META TAG
+    	 */
+    	MetaUtils.setMetaTitle(mv, map.get("map"), "name", "title");
+    	MetaUtils.setMetaDescription(mv, map.get("map"), "meta_description", "title");
+    	MetaUtils.setMetaKeyword(mv, map.get("map"), "meta_keyword");
+    	
     	return mv;
     }
 	
@@ -591,6 +744,13 @@ public class InformationController {
     	commandMap.put("language_id", language_id);
     	Map<String,Object> map = informationService.information(commandMap.getMap());
     	mv.addObject("map", map.get("map"));
+    	
+    	/**
+    	 * META TAG
+    	 */
+    	MetaUtils.setMetaTitle(mv, map.get("map"), "name", "title");
+    	MetaUtils.setMetaDescription(mv, map.get("map"), "meta_description", "title");
+    	MetaUtils.setMetaKeyword(mv, map.get("map"), "meta_keyword");
     	
     	return mv;
     }
@@ -610,6 +770,13 @@ public class InformationController {
     	Map<String,Object> map = informationService.information(commandMap.getMap());
     	mv.addObject("map", map.get("map"));
     	
+    	/**
+    	 * META TAG
+    	 */
+    	MetaUtils.setMetaTitle(mv, map.get("map"), "name", "title");
+    	MetaUtils.setMetaDescription(mv, map.get("map"), "meta_description", "title");
+    	MetaUtils.setMetaKeyword(mv, map.get("map"), "meta_keyword");
+    	
     	return mv;
     }
 	
@@ -627,6 +794,13 @@ public class InformationController {
     	commandMap.put("language_id", language_id);
     	Map<String,Object> map = informationService.information(commandMap.getMap());
     	mv.addObject("map", map.get("map"));
+    	
+    	/**
+    	 * META TAG
+    	 */
+    	MetaUtils.setMetaTitle(mv, map.get("map"), "name", "title");
+    	MetaUtils.setMetaDescription(mv, map.get("map"), "meta_description", "title");
+    	MetaUtils.setMetaKeyword(mv, map.get("map"), "meta_keyword");
     	
     	return mv;
     }

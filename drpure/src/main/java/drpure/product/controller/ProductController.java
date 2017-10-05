@@ -26,6 +26,7 @@ import drpure.common.common.CommandMap;
 import drpure.common.constant.Session;
 import drpure.common.controller.BaseController;
 import drpure.common.dto.CustomerDTO;
+import drpure.common.util.MetaUtils;
 import drpure.common.util.ObjectUtils;
 import drpure.common.util.ScriptUtils;
 import drpure.common.util.StoreUtil;
@@ -102,6 +103,13 @@ public class ProductController extends BaseController {
     	}
     	Map<String,Object> map = productService.productInfo(product_id);
     	mv.addObject("info", map.get("map"));
+    	
+    	/**
+    	 * META TAG
+    	 */
+    	MetaUtils.setMetaTitle(mv, map.get("map"), "name");
+    	MetaUtils.setMetaDescription(mv, map.get("map"), "meta_description", "name");
+    	MetaUtils.setMetaKeyword(mv, map.get("map"), "meta_keyword");
     	
     	if(null!=BaseController.getCustomSession(request, Session.ERROR_MSG)) {
     		mv.addObject("errorMsg", BaseController.getCustomSession(request, Session.ERROR_MSG));
@@ -419,6 +427,13 @@ public class ProductController extends BaseController {
 	    mv.addObject("availabilitys", availabilitys);
 	    mv.addObject("descriptions", descriptions);
 	    mv.addObject("weights", weights);
+	    
+	    /**
+    	 * META TAG
+    	 */
+    	MetaUtils.setMetaTitle(mv, "제품비교하기");
+    	MetaUtils.setMetaDescription(mv, "");
+    	MetaUtils.setMetaKeyword(mv, "");
 	    
     	ScriptUtils.productCompareScript(mv);
     	return mv;

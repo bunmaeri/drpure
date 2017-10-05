@@ -27,6 +27,7 @@ import drpure.common.email.ForgotPasswordEmail;
 import drpure.common.email.MailChimpEmail;
 import drpure.common.filter.SessionBox;
 import drpure.common.util.CommonUtils;
+import drpure.common.util.MetaUtils;
 import drpure.common.util.ObjectUtils;
 import drpure.common.util.StoreUtil;
 import drpure.common.util.WebUtils;
@@ -74,6 +75,13 @@ public class LoginController {
     		mv.addObject("successMsg", REGISTER_SUCCESS);
     		BaseController.setCustomSession(request, null, Session.REGISTER_SUCCESS);
     	}
+    	
+    	/**
+    	 * META TAG
+    	 */
+    	MetaUtils.setMetaTitle(mv, "로그인");
+    	MetaUtils.setMetaDescription(mv, "로그인");
+    	MetaUtils.setMetaKeyword(mv, "로그인");
     	
     	return mv;
     }

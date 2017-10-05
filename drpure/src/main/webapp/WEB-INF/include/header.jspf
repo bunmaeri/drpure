@@ -10,9 +10,9 @@
 <!--[if gt IE 8]><!--><html lang="en"><!--<![endif]-->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Dr. Pure Natural</title>
-<meta name="description" content="" />
-<meta name="keywords" content="" />
+<title><c:out value="${META_title}" default="Dr. Pure Natural"/></title>
+<meta name="description" content="<c:out value='${META_description}' default='&amp;&nbsp;' escapeXml='false'/>" />
+<meta name="keywords" content="<c:out value='${META_keyword}' default='&amp;&nbsp;' escapeXml='false'/>" />
 <meta name="robots" content="INDEX,FOLLOW" />
 <link rel="icon" href="/image/favicon.png" type="image/x-icon" />
 <link rel="shortcut icon" href="/image/favicon.png" type="image/x-icon" />
@@ -24,7 +24,7 @@
 //]]>
 </script>
 <![endif]-->
-<link rel="stylesheet" type="text/css" href="<c:url value='/css/main.css'/>?20171002" media="all" />
+<link rel="stylesheet" type="text/css" href="<c:url value='/css/main.css'/>?20171004" media="all" />
 <c:forEach items="${css}" var="css">
 <link rel="stylesheet" type="text/css" href="<c:url value='${css}'/>?201709242" media="all" />
 </c:forEach>

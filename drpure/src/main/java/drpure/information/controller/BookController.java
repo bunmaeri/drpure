@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import drpure.common.common.CommandMap;
+import drpure.common.util.MetaUtils;
 import drpure.common.util.StoreUtil;
 import drpure.information.service.BookService;
 import drpure.information.service.InformationService;
@@ -47,6 +48,13 @@ public class BookController {
     	Map<String,Object> map = informationService.information(commandMap.getMap());
     	mv.addObject("info", map.get("map"));
     	
+    	/**
+    	 * META TAG
+    	 */
+    	MetaUtils.setMetaTitle(mv, map.get("map"), "name", "title");
+    	MetaUtils.setMetaDescription(mv, map.get("map"), "meta_description", "title");
+    	MetaUtils.setMetaKeyword(mv, map.get("map"), "meta_keyword");
+    	
     	return mv;
     }
 	
@@ -65,6 +73,13 @@ public class BookController {
     	Map<String,Object> book = bookService.book(commandMap.getMap());
     	mv.addObject("book", book.get("map"));
     	
+    	/**
+    	 * META TAG
+    	 */
+    	MetaUtils.setMetaTitle(mv, book.get("map"), "name", "title");
+    	MetaUtils.setMetaDescription(mv, book.get("map"), "meta_description", "title");
+    	MetaUtils.setMetaKeyword(mv, book.get("map"), "meta_keyword");
+    	
     	commandMap.put("information_id", 21);
     	commandMap.put("language_id", language_id);
     	Map<String,Object> map = informationService.information(commandMap.getMap());
@@ -73,7 +88,7 @@ public class BookController {
     	commandMap.put("language_id", language_id);
     	List<Map<String,Object>> list = bookService.listBook(commandMap.getMap());
     	mv.addObject("list", list);
-    	
+
     	return mv;
     }
 }

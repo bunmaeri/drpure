@@ -26,6 +26,7 @@ import drpure.common.email.OrderEmail;
 import drpure.common.email.RegisterEmail;
 import drpure.common.email.RegisterOfficeEmail;
 import drpure.common.util.CommonUtils;
+import drpure.common.util.MetaUtils;
 import drpure.common.util.ObjectUtils;
 import drpure.common.util.ScriptUtils;
 import drpure.common.util.StoreUtil;
@@ -56,6 +57,13 @@ public class RegisterController extends BaseController {
 		ModelAndView mv = new ModelAndView("/account/register");
 
 		mv.addObject("customer_join_path", accountService.listCustomerJoinPath());
+    	
+		/**
+    	 * META TAG
+    	 */
+    	MetaUtils.setMetaTitle(mv, "회원가입");
+    	MetaUtils.setMetaDescription(mv, "회원가입");
+    	MetaUtils.setMetaKeyword(mv, "회원가입");
     	
     	ScriptUtils.accountScript(mv);
     	
