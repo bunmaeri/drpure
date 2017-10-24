@@ -24,12 +24,12 @@
 //]]>
 </script>
 <![endif]-->
-<link rel="stylesheet" type="text/css" href="<c:url value='/css/main.css'/>?20171004" media="all" />
+<link rel="stylesheet" type="text/css" href="<c:url value='/css/main.css'/>" media="all" />
 <c:forEach items="${css}" var="css">
-<link rel="stylesheet" type="text/css" href="<c:url value='${css}'/>?201709242" media="all" />
+<link rel="stylesheet" type="text/css" href="<c:url value='${css}'/>" media="all" />
 </c:forEach>
 
-<script type="text/javascript" src="<c:url value='/js/prototypejs.js'/>?201709221"></script>
+<script type="text/javascript" src="<c:url value='/js/prototypejs.js'/>"></script>
 <!--[if lt IE 7]>
 <script type="text/javascript" src="<c:url value='/js/sleight.js'/>"></script>
 <![endif]-->
@@ -40,11 +40,12 @@
 <script type="text/javascript" src="<c:url value='/js/jdom.js'/>"></script>
 <![endif]-->
 
-<script type="text/javascript" src="https://code.jquery.com/jquery.min.js"></script>
 <script src="<c:url value='/js/common.js'/>" charset="utf-8"></script>
 <c:forEach items="${js}" var="js">
 <script src="<c:url value='${js}'/>" charset="utf-8"></script>
 </c:forEach>
+<script type="text/javascript" src="https://code.jquery.com/jquery.min.js"></script>
+<%-- <script type="text/javascript" src="<c:url value='/js/jquery-3.2.1.min.js'/>"></script> --%>
 
 <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
 <link href="/js/font-awesome/css/font-awesome.min.css?20170405" rel="stylesheet" />
@@ -85,12 +86,20 @@
 	                            <label for="search" class="sr-only">검색하세요.</label>
 	                            <input id="search" type="text" name="q" value="" class="input-text" maxlength="128" placeholder="검색하세요." autocomplete="off">
 	                        </form>
-	                        <button type="button" class="button button-close" data-accordion="collapse" data-target="" data-index="0"><i class="icon-search"></i></button>
+	                        <button type="button" id="search_form_submit" class="button button-close" data-accordion="collapse" data-target="" data-index="0"><i class="icon-search"></i></button>
                         </div>
                     </div>
                 </div>
             </div>
-        
+            <script type="text/javascript">
+                //<![CDATA[
+                $('#search_form_submit').on('click', function() {
+                     var q = $('#search').val();
+                     var url = '/search.dr?q='+q;
+                     setLocation(url);
+                 });
+                //]]>
+            </script>
             <ul class="links links__inline" style="margin:10px 0;">
             <c:choose>
             <c:when test="${sessionScope.IS_SESSION}">

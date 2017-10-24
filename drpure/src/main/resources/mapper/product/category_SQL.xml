@@ -39,6 +39,7 @@
            AND p.product_id = pd.product_id
            AND ptc.category_id = #{category_id}
            AND p.status = 1
+           AND pd.language_id = 1
     </select>
     
     <select id="categoryProduct" parameterType="hashmap" resultType="hashmap">
@@ -56,6 +57,7 @@
                AND p.product_id = pd.product_id
                AND ptc.category_id = #{category_id}
                AND p.status = 1
+               AND pd.language_id = 1
              ORDER BY LCASE(pd.name) ASC
         ]]>
         <include refid="common.pagingSub"/> 

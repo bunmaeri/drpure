@@ -10,6 +10,7 @@ import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
+import drpure.common.util.ObjectUtils;
 import drpure.information.dao.BookDAO;
 
 @Service("bookService")
@@ -28,7 +29,7 @@ public class BookServiceImpl implements BookService{
 	public Map<String, Object> book(Map<String, Object> map) throws Exception {
 		Map<String, Object> resultMap = new HashMap<String,Object>();
 		Map<String, Object> tempMap = bookDAO.book(map);
-		tempMap.put("description", StringEscapeUtils.unescapeHtml(tempMap.get("description").toString()));
+		tempMap.put("description", StringEscapeUtils.unescapeHtml(ObjectUtils.null2void(tempMap.get("description"))));
 		resultMap.put("map", tempMap);
 		
 		return resultMap;

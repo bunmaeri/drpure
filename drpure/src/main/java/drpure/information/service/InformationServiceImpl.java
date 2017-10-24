@@ -10,6 +10,7 @@ import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
+import drpure.common.util.ObjectUtils;
 import drpure.information.dao.InformationDAO;
 
 @Service("informationService")
@@ -45,7 +46,7 @@ public class InformationServiceImpl implements InformationService{
 	public Map<String, Object> infoContents(Map<String, Object> map) throws Exception {
 		Map<String, Object> resultMap = new HashMap<String,Object>();
 		Map<String, Object> tempMap = informationDAO.infoContents(map);
-		tempMap.put("description", StringEscapeUtils.unescapeHtml(tempMap.get("description").toString()));
+		tempMap.put("description", StringEscapeUtils.unescapeHtml(ObjectUtils.null2void(tempMap.get("description"))));
 		resultMap.put("map", tempMap);
 		
 		return resultMap;

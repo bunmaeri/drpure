@@ -117,6 +117,11 @@ public class LoginController {
                 	emv.addObject("email", ObjectUtils.null2void(commandMap.get("email")));
                 	emv.addObject("errorMsg", "이메일과 비밀번호가 일치하지 않습니다!"); 
 				    return emv;
+            	} else
+            	if(ObjectUtils.null2void(customer.getStatus()).equals("0")) {
+            		emv.addObject("email", ObjectUtils.null2void(commandMap.get("email")));
+                	emv.addObject("errorMsg", "사용이 중지된 이메일입니다!"); 
+				    return emv;
                 } else {
                 	// My Home Doc 고객이면 https://myhomedocus.com으로
                 	if(ObjectUtils.null2Value(customer.getMyhomedoc(),"0").equals("1")) {

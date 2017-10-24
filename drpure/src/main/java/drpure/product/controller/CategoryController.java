@@ -19,6 +19,7 @@ import drpure.common.constant.Session;
 import drpure.common.controller.BaseController;
 import drpure.common.dto.CustomerDTO;
 import drpure.common.util.MetaUtils;
+import drpure.common.util.NumberUtils;
 import drpure.common.util.Pagemaker;
 import drpure.common.util.ScriptUtils;
 import drpure.product.service.CategoryService;
@@ -43,6 +44,10 @@ public class CategoryController extends BaseController {
 	@RequestMapping(value="/products/category/{category_id}.dr")
     public ModelAndView productCategory(HttpSession session, Pagemaker pagemaker, @PathVariable String category_id, CommandMap commandMap) throws Exception{
     	ModelAndView mv = new ModelAndView("/product/category");
+    	
+    	if( NumberUtils.isNumeric( category_id ) == false ) {
+	   		 return new ModelAndView("redirect:/");
+	   	}
     	
     	session.setAttribute(Session.SEARCH_Q, null); // 세션에서 검색한 것은 삭제한다.
     	
@@ -129,6 +134,9 @@ public class CategoryController extends BaseController {
 	    		StringBuffer sb = new StringBuffer();
 		    	sb.append("<ol>");
 		    	compareList = productService.listCompareProducts(paramList);
+		    	if(null==compareList) {
+		    		compareList = new ArrayList<Map<String,Object>>();
+		    	}
 				
 				size = paramList.size();
 				for(int i=0;i<size;i++) {

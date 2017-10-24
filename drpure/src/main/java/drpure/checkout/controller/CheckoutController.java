@@ -97,12 +97,25 @@ public class CheckoutController extends BaseController {
     	 * 결제자 주소 & 배송지 주소
     	 */
     	OrderUtils outil = new OrderUtils();
+    	String shipping_address = ObjectUtils.null2void(BaseController.getCustomSession(session, Session.CHECKOUT_SHIPPING_ADDRESS));
+    	
+    	if(customer.getAddressId().equals("") || customer.getAddressId().equals("0")) {
+    		customer.setAddressId(shipping_address);
+    	}
+    	
     	Map<String,Object> payment = accountService.addressInfo(customer.getAddressId());
     	Map<String,Object> paymentAddressMap = (Map<String, Object>) payment.get("map");
-    	paymentAddressMap.put("address", outil.addressView(paymentAddressMap));
-    	mv.addObject("payment_address", paymentAddressMap);
+    	if(null==paymentAddressMap || ObjectUtils.isEmpty(paymentAddressMap)) {
+    		payment = accountService.addressInfo(shipping_address);
+        	paymentAddressMap = (Map<String, Object>) payment.get("map");
+        	paymentAddressMap.put("address", outil.addressView(paymentAddressMap));
+	    	mv.addObject("payment_address", paymentAddressMap);
+    	} else {
+	    	paymentAddressMap.put("address", outil.addressView(paymentAddressMap));
+	    	mv.addObject("payment_address", paymentAddressMap);
+    	}
     	
-    	String shipping_address = ObjectUtils.null2void(BaseController.getCustomSession(session, Session.CHECKOUT_SHIPPING_ADDRESS));
+//    	String shipping_address = ObjectUtils.null2void(BaseController.getCustomSession(session, Session.CHECKOUT_SHIPPING_ADDRESS));
     	Map<String,Object> shipping = accountService.addressInfo(shipping_address);
     	Map<String,Object> shippingAddressMap = (Map<String, Object>) shipping.get("map");
     	shippingAddressMap.put("address", outil.addressView(shippingAddressMap));
@@ -255,7 +268,9 @@ public class CheckoutController extends BaseController {
 			}
     	}
 		
-		this.sortOrder(session, sortMap, customer_id);
+    	String shipping_zone_id = ObjectUtils.null2void(shippingAddressMap.get("zone_id"));
+//    	System.err.println("shipping_zone_id===================================>"+shipping_zone_id);
+		this.sortOrder(session, sortMap, customer_id, shipping_zone_id);
 		mv.addObject("totals", checkoutService.cartOrderTotalList(customer_id));
 		
 		int thisYear = DateUtils.getYear();
@@ -285,7 +300,13 @@ public class CheckoutController extends BaseController {
 					map.put("title", ObjectUtils.null2void(commandMap.get("carrier_name")));
 					map.put("value", ObjectUtils.null2void(commandMap.get("carrier_cost")));
 					checkoutService.addCartOrderTotal(map);
-					
+					// 배송방법을 세션에 저장
+			    	Map<String,Object> shipping_method = new HashMap<String,Object>();
+			    	shipping_method.put("code", ObjectUtils.null2void(commandMap.get("carrier_code")));
+			    	shipping_method.put("name", ObjectUtils.null2void(commandMap.get("carrier_name")));
+			    	shipping_method.put("cost", ObjectUtils.null2void(commandMap.get("carrier_cost")));
+			    	
+			    	BaseController.setCustomSession(session, shipping_method, Session.CHECKOUT_SHIPPING_METHOD);
 				} else
 				// 총합계
 				if(map.get("code").equals("total")) {
@@ -294,7 +315,7 @@ public class CheckoutController extends BaseController {
 				}
 			}
 		}
-		
+	
 //		StringBuffer sb = new StringBuffer();
 //		List<Map<String,Object>> list = checkoutService.cartOrderTotalList(customer_id);
 //		if(list.size()>0) {
@@ -431,7 +452,7 @@ public class CheckoutController extends BaseController {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public void sortOrder(HttpSession session, Map<String,Object> sortMap, String customer_id) throws Exception {
+	public void sortOrder(HttpSession session, Map<String,Object> sortMap, String customer_id, String shipping_zone_id) throws Exception {
 		List<Map<String,Object>> list = checkoutService.getSortOrder();
 		Map<String,Object> tmp = null;
 		if(list.size()>0) {
@@ -447,26 +468,30 @@ public class CheckoutController extends BaseController {
 				} else
 				// tax
 				if(map.get("code").equals("tax")) {
-					if(sortMap.containsKey("shipping") && sortMap.containsKey("sub_total")) {
-						map.put("customer_id", customer_id);
-						tmp = (Map<String, Object>) sortMap.get("shipping");
-						// 주소가 미국일 때 CA Sales Tax 적용
-	//					if(tmp.get("country_id").equals("223")) {
-						Map<String,Object> subMap = (Map<String, Object>) sortMap.get("sub_total");
-//						log.debug("subMap===================================>"+subMap.get("value"));
-						tmp.put("sub_total", subMap.get("value"));
-						Map<String, Object> shippingMap = checkoutService.caclSalesTax(tmp);
-	//					}
-						if(null!=shippingMap) {
-							String shipping = ObjectUtils.null2void(shippingMap.get("sales_tax"));
-//							log.debug("shipping===================================>"+shipping);
-							if(null!=shippingMap && !shipping.equals("0")) {
-								map.put("value", shipping);
-								checkoutService.addCartOrderTotal(map);
-								// Tax 여부를 세션에 저장한다.
-								BaseController.setCustomSession(session, true, Session.CHECKOUT_IS_TAX);
-								// Tax Rate을 세션에 저장한다.
-								BaseController.setCustomSession(session, ObjectUtils.null2void(shippingMap.get("rate")), Session.CHECKOUT_TAX_RATE);
+					// CA 일 때에만 적용
+//					System.err.println("shipping_zone_id==================>"+shipping_zone_id);
+					if(ObjectUtils.null2void(shipping_zone_id).equals("3624")) {
+						if(sortMap.containsKey("shipping") && sortMap.containsKey("sub_total")) {
+							map.put("customer_id", customer_id);
+							tmp = (Map<String, Object>) sortMap.get("shipping");
+							// 주소가 미국일 때 CA Sales Tax 적용
+		//					if(tmp.get("country_id").equals("223")) {
+							Map<String,Object> subMap = (Map<String, Object>) sortMap.get("sub_total");
+	//						log.debug("subMap===================================>"+subMap.get("value"));
+							tmp.put("sub_total", subMap.get("value"));
+							Map<String, Object> shippingMap = checkoutService.caclSalesTax(tmp);
+		//					}
+							if(null!=shippingMap) {
+								String shipping = ObjectUtils.null2void(shippingMap.get("sales_tax"));
+	//							log.debug("shipping===================================>"+shipping);
+								if(null!=shippingMap && !shipping.equals("0")) {
+									map.put("value", shipping);
+									checkoutService.addCartOrderTotal(map);
+									// Tax 여부를 세션에 저장한다.
+									BaseController.setCustomSession(session, true, Session.CHECKOUT_IS_TAX);
+									// Tax Rate을 세션에 저장한다.
+									BaseController.setCustomSession(session, ObjectUtils.null2void(shippingMap.get("rate")), Session.CHECKOUT_TAX_RATE);
+								}
 							}
 						}
 					}
@@ -588,10 +613,12 @@ public class CheckoutController extends BaseController {
 	    	String cc_expire_date_month = "";
 	    	String cc_expire_date_year = "";
 	    	String cc_cvv2 = "";
-	    	if(!isBankTransfer) {
+	    	if(!isBankTransfer || !isExceptPayment) {
 	    		cc_number = ObjectUtils.null2void(commandMap.get("cc_number"));
 		    	cc_expire_date_month = ObjectUtils.null2void(commandMap.get("cc_expire_date_month"));
-		    	cc_expire_date_year = ObjectUtils.null2void(commandMap.get("cc_expire_date_year")).substring(2);
+		    	if(!ObjectUtils.null2void(commandMap.get("cc_expire_date_year")).equals("")) {
+		    		cc_expire_date_year = ObjectUtils.null2void(commandMap.get("cc_expire_date_year")).substring(2);
+		    	}
 		    	cc_cvv2 = ObjectUtils.null2void(commandMap.get("cc_cvv2"));
 	    	}
 	    	
@@ -932,9 +959,9 @@ public class CheckoutController extends BaseController {
 		map.put("config_default_reward", code.getValue("config_default_reward"));
 		// 총합계
     	if(null!=customer && null!=customer.getCustomerGroupId() && !customer.getCustomerGroupId().equals("")) {
-    		commandMap.put("customer_group_id", customer.getCustomerGroupId());
+    		map.put("customer_group_id", customer.getCustomerGroupId());
     	} else {
-    		commandMap.put("customer_group_id", "0");
+    		map.put("customer_group_id", "0");
     	}
 		checkoutService.addOrderProduct(map);
 	

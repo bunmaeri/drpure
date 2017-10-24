@@ -18,51 +18,75 @@ public class MetaUtils {
 	}
 	
 	public static void setMetaTitle(ModelAndView mv, Map<String,Object> map, String name) {
-		mv.addObject("META_title", map.get(name));
+		mv.addObject("META_title", ObjectUtils.null2void(map.get(name)));
 	}
 	
 	public static void setMetaDescription(ModelAndView mv, Map<String,Object> map, String name) {
-		mv.addObject("META_description", map.get(name));
+		mv.addObject("META_description", ObjectUtils.null2void(map.get(name)));
 	}
 	
 	public static void setMetaKeyword(ModelAndView mv, Map<String,Object> map, String name) {
-		mv.addObject("META_keyword", map.get(name));
+		mv.addObject("META_keyword", ObjectUtils.null2void(map.get(name)));
 	}
 	
 	@SuppressWarnings("unchecked")
 	public static void setMetaTitle(ModelAndView mv, Object obj, String name) {
-		Map<String,Object> map = (Map<String,Object>) obj;
-		mv.addObject("META_title", map.get(name));
+		if(null!=obj) {
+			Map<String,Object> map = (Map<String,Object>) obj;
+			mv.addObject("META_title", ObjectUtils.null2void(map.get(name)));
+		} else {
+			mv.addObject("META_title", "");
+		}
 	}
 	
 	@SuppressWarnings("unchecked")
 	public static void setMetaDescription(ModelAndView mv, Object obj, String name) {
-		Map<String,Object> map = (Map<String,Object>) obj;
-		mv.addObject("META_description", map.get(name));
+		if(null!=obj) {
+			Map<String,Object> map = (Map<String,Object>) obj;
+			mv.addObject("META_description", ObjectUtils.null2void(map.get(name)));
+		} else {
+			mv.addObject("META_description", "");
+		}
 	}
 	
 	@SuppressWarnings("unchecked")
 	public static void setMetaKeyword(ModelAndView mv, Object obj, String name) {
-		Map<String,Object> map = (Map<String,Object>) obj;
-		mv.addObject("META_keyword", map.get(name));
+		if(null!=obj) {
+			Map<String,Object> map = (Map<String,Object>) obj;
+			mv.addObject("META_keyword", ObjectUtils.null2void(map.get(name)));
+		} else {
+			mv.addObject("META_keyword", "");
+		}
 	}
 	
 	
 	@SuppressWarnings("unchecked")
 	public static void setMetaTitle(ModelAndView mv, Object obj, String name, String name1) {
-		Map<String,Object> map = (Map<String,Object>) obj;
-		mv.addObject("META_title", ObjectUtils.null2Value(ObjectUtils.null2void(map.get(name)), ObjectUtils.null2void(map.get(name1))));
+		if(null!=obj) {
+			Map<String,Object> map = (Map<String,Object>) obj;
+			mv.addObject("META_title", ObjectUtils.null2Value(ObjectUtils.null2void(map.get(name)), ObjectUtils.null2void(map.get(name1))));
+		} else {
+			mv.addObject("META_title", "");
+		}
 	}
 	
 	@SuppressWarnings("unchecked")
 	public static void setMetaDescription(ModelAndView mv, Object obj, String name, String name1) {
-		Map<String,Object> map = (Map<String,Object>) obj;
-		mv.addObject("META_description", ObjectUtils.null2Value(ObjectUtils.null2void(map.get(name)), ObjectUtils.null2void(map.get(name1))));
+		if(null!=obj) {
+			Map<String,Object> map = (Map<String,Object>) obj;
+			mv.addObject("META_description", ObjectUtils.null2Value(ObjectUtils.null2void(map.get(name)), ObjectUtils.null2void(map.get(name1))));
+		} else {
+			mv.addObject("META_description", "");
+		}
 	}
 	
 	@SuppressWarnings("unchecked")
 	public static void setMetaKeyword(ModelAndView mv, Object obj, String name, String name1) {
-		Map<String,Object> map = (Map<String,Object>) obj;
-		mv.addObject("META_keyword", ObjectUtils.null2Value(ObjectUtils.null2void(map.get(name)), ObjectUtils.null2void(map.get(name1))));
+		if(null!=obj) {
+			Map<String,Object> map = (Map<String,Object>) obj;
+			mv.addObject("META_keyword", ObjectUtils.null2Value(ObjectUtils.null2void(map.get(name)), ObjectUtils.null2void(map.get(name1))));
+		} else {
+			mv.addObject("META_keyword", "");
+		}
 	}
 }
